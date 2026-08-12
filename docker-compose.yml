@@ -1,0 +1,32 @@
+services:
+  # PostgreSQL 데이터베이스
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: todouser
+      POSTGRES_PASSWORD: todopass
+      POSTGRES_DB: tododb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U todouser -d tododb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  # Node.js 앱
+  app:
+    build: ./app
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: todouser
+      DB_PASSWORD: todopass
+      DB_NAME: tododb
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
