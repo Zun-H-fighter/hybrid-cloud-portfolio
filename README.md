@@ -45,6 +45,11 @@ TODO 어플리케이션을 배포하고, IaC, 모니터링, CI/CD로 운영을 �
 
 - [ ] **Phase 1** — Hetzner VPS 생성 및 보안 하드닝 (SSH 키 인증, 방화벽, fail2ban)
 - [ ] **Phase 2** — TODO 앱 개발 + Docker화, Nginx 리버스 프록시 + HTTPS
+    - [v] TODO 앱 개발 (Express + PostgreSQL, CRUD)
+    - [v] 웹 프론트엔드 (HTML/CSS/JS)
+    - [v] Docker Compose로 앱 + DB 컨테이너화
+    - [ ] 서버에 배포
+    - [ ] Nginx 리버스 프록시 + HTTPS
 - [ ] **Phase 3** — Prometheus + Grafana 모니터링 스택 구축
 - [ ] **Phase 4** — AWS 연동 (IAM, S3 백업, CloudWatch)
 - [ ] **Phase 5** — Terraform(AWS) + Ansible(서버 구성)으로 IaC 전환
