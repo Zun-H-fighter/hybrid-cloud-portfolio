@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="vewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODO App</title>
+    <style>
+        body { font-family: sans-serif; max-width: 500px; margin: 40px auto; padding: 0 20px; }
+        h1 { text-align: center; }
+        .input-row {display: flex; gap: 8px; margin-bottom: 20px; }
+        .input-row input { flex: 1; padding: 8px; font-size: 17px; }
+        .input-row button { padding: 8px 16px; font-size: 16px; cursor: pointer; }
+        ul { list-style: none; padding: 0; }
+        li {display: flex; align-items: center; gap: 10px; padding: 10px; border-bottom: 1px solid #eee; }
+        li.done span { text-decoration: line-through; color: #aaa; }
+        li span { flex: 1; }
+        li button { cursor: pointer; }
+    </style>    
+</head>
+<body>
+    <h1>📝 TODO</h1>
+
+    <div class="input-row">
+        <input type="text" id="titleInput" placeholder="할 일을 입력하세요" />
+        <button onclick="addTodo()">추가</button>
+    </div>
+
+    <ul id="todoList"></ul>
+
+    <script>
+        const API = "/todos";
+
+        //목록가져와서 그리기
+        async function loadTodos() {
+            const res = await fetch(API);
+            const todos = await res.json();
+            const list = document.getElementById("todoList");
+            list.innerHTML = "";
+            todos.forEach((todo) => {
+                const li = document.createElement("li");
+                if (todo.done) li.classList.add("done");
+                li.innerHTML = `
+                    <input type="checkbox" ${todo.done ? "checked" : ""}
+                        onchange="toggleTodo(${todo.id}, ${!todo.done})" />
+                    <span>${todo.title}</span>
+                    <button onclick="deleteTodo(${todo.id})">삭제</button>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        // 추가
+        async function addTodo() {
+            const input = document.getElementById("titleInput");
+            const title = input.value.trim();
+            if (!title) return;
+            await fetch(API, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ title }),
+            });
+            input.value = "";
+            loadTodos();
+        }
+
+        // 완료 체크 토글
+        async function toggleTodo(id, done) {
+            await fetch(`${API}/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ done }),
+            });
+            loadTodos();
+        }
+
+        // 삭제
+        async function deleteTodo(id) {
+            await fetch(`${API}/${id}`, { method: "DELETE" });
+            loadTodos();
+        }
+
+        //엔터키로도 추가
+        document.getElementById("titleInput").addEventListener("keydown", (e) => {
+            if (e.key === "Enter") addTodo();
+        });
+
+        //페이지 열리면 목록로드
+        loadTodos();
+    </script>
+</body>
+</html>

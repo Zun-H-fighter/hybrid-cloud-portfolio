@@ -4,6 +4,7 @@ const pool = require("./db");
 
 const app = express();
 app.use(express.json()); // JSON 요청 본문 파싱
+app.use(express.static("public")); //퍼블릭 폴더 정적 서빙
 
 // 서버 시작 시 테이블 없으면 생성
 async function initDB() {
