@@ -51,13 +51,19 @@ TODO 어플리케이션을 배포하고, IaC, 모니터링, CI/CD로 운영을 �
     - [ ] 서버에 배포
     - [ ] Nginx 리버스 프록시 + HTTPS
 - [ ] **Phase 3** — Prometheus + Grafana 모니터링 스택 구축
-- [ ] **Phase 4** — AWS 연동 (IAM, S3 백업, CloudWatch)
+- [ ] **Phase 4** — AWS 연동
+  - [x] 계정 보안 설정 (루트 MFA, 예산 알림, IAM 관리자 사용자)
+  - [x] S3 백업 버킷 생성 (버저닝 활성화, 퍼블릭 액세스 차단)
+  - [x] 최소권한 IAM 사용자 + 커스텀 정책 (백업 업로드 전용)
+  - [ ] 서버에서 S3로 자동 백업 스크립트
+  - [ ] CloudWatch 로그·메트릭 연동
 - [ ] **Phase 5** — Terraform(AWS) + Ansible(서버 구성)으로 IaC 전환
 - [ ] **Phase 6** — GitHub Actions CI/CD 파이프라인
 
 ## 진행 상황
 
-현재 Phase 1 진행 중.
+로컬 앱(TODO) 개발 완료. AWS 기반(IAM·S3) 구성 완료.
+현재 Hetzner 서버 배포(Phase 1) 준비 중.
 
 ## 저장소 구조
 
