@@ -58,7 +58,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - prometheus:/prometheus
+      - promdata:/prometheus
     deploy:
       resources:
         limits:
