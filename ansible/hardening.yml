@@ -100,6 +100,42 @@
         state: started
         enabled: yes
 
+    # 스왑 메모리 설정 (2GB)
+    - name: 스왑 파일 존재 확인
+      stat:
+        path: /swapfile
+      register: swapfile_check
+    
+    - name: 스왑 파일 생성 (2GB)
+      command: fallocate -l 2G /swapfile
+      when: not swapfile_check.stat.exists
+
+    - name: 스왑 파일 권한 설정
+      file:
+        path: /swapfile
+        mode: '0600'
+
+    - name: 스왑 영역 초기화
+      command: mkswap /swapfile
+      when: not swapfile_check.stat.exists
+
+    - name: 스왑 활성화
+      command: swapon /swapfile
+      when: not swapfile_check.stat.exists
+
+    - name: 스왑 fstab 등록 (재부팅 유지)
+      lineinfile:
+        path: /etc/fstab
+        line: '/swapfile none swap sw 0 0'
+        state: present
+
+    - name: swappiness 값 설정 (10)
+      sysctl:
+        name: vm.swappiness
+        value: '10'
+        state: present
+        reload: yes
+        
   handlers:
     - name: restart ssh
       service:
