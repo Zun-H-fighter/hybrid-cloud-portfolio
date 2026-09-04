@@ -1,0 +1,107 @@
+---
+- name: 서버 기본 설정 및 하드닝
+  hosts: webserver
+  become: true #sudo 권한으로 실행
+
+  tasks:
+    - name: apt 패키지 목록 업뎃
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: 필수 패키지 설치(fail2ban, ufw)
+      apt:
+        name:
+          - fail2ban
+          - ufw
+        state: present
+
+    - name: ufw - SSH 허용
+      ufw:
+        rule: allow
+        name: OpenSSH
+
+    - name: ufw - HTTP 허용
+      ufw:
+        rule: allow
+        port: '80'
+        proto: tcp
+
+    - name: ufw 활성화
+      ufw:
+        state: enabled
+    
+    - name: fail2ban 서비스 실행 및 부팅 시 자동 시작
+      service:
+        name: fail2ban
+        state: started
+        enabled: yes
+
+    - name: SSH - root 로그인 차단
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PermitRootLogin'
+        line: 'PermitRootLogin no'
+      notify: restart ssh
+
+    - name: SSH - 비밀번호 로그인 차단
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PasswordAuthentication'
+        line: 'PasswordAuthentication no'
+      notify: restart ssh
+
+    - name: Docker 의존 패키지 설치
+      apt:
+        name:
+          - ca-certificates
+          - curl
+          - gnupg
+        state: present
+    
+    - name: Docker GPG 키 디렉토리 설정
+      file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+
+    - name: Docker 공식 GPG 키 추가
+      get_url:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        dest: /etc/apt/keyrings/docker.asc
+        mode: '0644'
+
+    - name: Docker apt 저장소 등록
+      apt_repository:
+        repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        filename: docker
+        state: present
+
+    - name: Docker 엔진 설치
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: present
+        update_cache: yes
+
+    - name: Deploy 유저를 docker 그룹에 추가
+      user:
+        name: deploy
+        groups: docker
+        append: yes
+    
+    - name: Docker 서비스 실행 및 부팅 시 자동 시작
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+  handlers:
+    - name: restart ssh
+      service:
+        name: ssh
+        state: restarted
