@@ -46,21 +46,21 @@ TODO 어플리케이션을 배포하고, IaC, 모니터링, CI/CD로 운영을 �
 ## 로드맵
 
 - [v] **Phase 1** — Hetzner VPS 생성 및 보안 하드닝 (SSH 키 인증, 방화벽, fail2ban)
-- [ ] **Phase 2** — TODO 앱 개발 + Docker화, Nginx 리버스 프록시 + HTTPS
+- [v] **Phase 2** — TODO 앱 개발 + Docker화, Nginx 리버스 프록시 + HTTPS
     - [v] TODO 앱 개발 (Express + PostgreSQL, CRUD)
     - [v] 웹 프론트엔드 (HTML/CSS/JS)
     - [v] Docker Compose로 앱 + DB 컨테이너화
     - [v] 서버에 배포
     - [v] Nginx 리버스 프록시
-    - [ ] HTTPS (도메인 확보 후)
+    - [v] HTTPS (도메인 확보 후)
 - [v] **Phase 3** — Prometheus + Grafana 모니터링 스택 구축
-- [ ] **Phase 4** — AWS 연동
+- [v] **Phase 4** — AWS 연동
   - [v] 계정 보안 설정 (루트 MFA, 예산 알림, IAM 관리자 사용자)
   - [v] S3 백업 버킷 생성 (버저닝 활성화, 퍼블릭 액세스 차단)
   - [v] 최소권한 IAM 사용자 + 커스텀 정책 (백업 업로드 전용)
   - [v] 서버에서 S3로 자동 백업 스크립트
-  - [ ] CloudWatch 로그·메트릭 연동
-- [ ] **Phase 5** — Terraform(AWS) + Ansible(서버 구성)으로 IaC 전환
+  - [X] ~~CloudWatch 로그·메트릭 연동~~ (Prometheus/Grafana로 대체, 향후 AWS 네이티브 프로젝트에서 다룰 예정)
+- [v] **Phase 5** — Terraform(AWS) + Ansible(서버 구성)으로 IaC 전환
 - [ ] **Phase 6** — GitHub Actions CI/CD 파이프라인
 
 ## 진행 상황
