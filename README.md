@@ -61,13 +61,11 @@ TODO 어플리케이션을 배포하고, IaC, 모니터링, CI/CD로 운영을 �
   - [v] 서버에서 S3로 자동 백업 스크립트
   - [X] ~~CloudWatch 로그·메트릭 연동~~ (Prometheus/Grafana로 대체, 향후 AWS 네이티브 프로젝트에서 다룰 예정)
 - [v] **Phase 5** — Terraform(AWS) + Ansible(서버 구성)으로 IaC 전환
-- [ ] **Phase 6** — GitHub Actions CI/CD 파이프라인
+- [v] **Phase 6** — GitHub Actions CI/CD 파이프라인
 
 ## 진행 상황
 
-로컬 앱(TODO) 개발 완료. AWS 기반(IAM·S3) 구성 완료.
-현재 Hetzner 서버 배포(Phase 1) 완료.
-Nginx 리버스 프록시 설정 완료
+TODO APP 포트폴리오 구성 완료.
 
 ## 저장소 구조
 
