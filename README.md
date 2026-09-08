@@ -41,7 +41,7 @@ TODO 어플리케이션을 배포하고, IaC, 모니터링, CI/CD로 운영을 �
 - Hetzner VPS: Nginx → Node.js 앱 → PostgreSQL을 Docker Compose로 운영,
   Prometheus/Grafana로 시스템·컨테이너 메트릭 수집
 - AWS: DB 백업을 S3로 전송, IAM 최소권한 원칙으로 접근 제어,
-  CloudWatch로 온프레미스 로그·메트릭을 클라우드에서 관측
+  ~~CloudWatch로 온프레미스 로그·메트릭을 클라우드에서 관측~~
 
 ## 로드맵
 
@@ -66,6 +66,13 @@ TODO 어플리케이션을 배포하고, IaC, 모니터링, CI/CD로 운영을 �
 ## 진행 상황
 
 TODO APP 포트폴리오 구성 완료.
+
+## 스크린샷
+
+| | |
+|---|---|
+| ![Grafana](docs/screenshots/grafana-dashboard.png) 실시간 모니터링 | ![HTTPS](docs/screenshots/HTTPS_Credential.png) HTTPS 적용 |
+| ![CI/CD](docs/screenshots/CI-CD_workflow.png) 자동 배포 | ![Backup](docs/screenshots/backup_files.png) 일별 자동 백업(cron으로 매일 자동 백업됨!!) |
 
 ## 저장소 구조
 
