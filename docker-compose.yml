@@ -80,7 +80,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 256M
+          memory: 384M
     depends_on:
       - prometheus
 
