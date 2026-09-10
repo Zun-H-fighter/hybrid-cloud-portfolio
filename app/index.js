@@ -67,7 +67,7 @@ app.put("/todos/:id", async (req, res, next) => {
             RETURNING *`,
             [title, done, id]
         );
-        if (result,rows,length === 0)
+        if (result.rows.length === 0)
             return res.status(404).json({ error: "해당 할 일을 못 찾았어요"});
         res.json(result.rows[0]);
     } catch (err){
@@ -99,6 +99,6 @@ app.use((err, req, res, next) =>{
 
 const PORT = process.env.PORT || 3000;
 initDB().then(() => {
-    app.listen(PORT, () => console.log('서버 실행 중: http://localhost:${PORT}'));  
+    app.listen(PORT, () => console.log(`서버 실행 중: http://localhost:${PORT}`));  
 });
 
