@@ -20,7 +20,7 @@ services:
       DB_HOST: db
       DB_PORT: 5432
       DB_USER: todouser
-      DB_PASSWORD: todopass
+      DB_PASSWORD: ${DB_PASSWORD:?set in .env}
       DB_NAME: tododb
     depends_on:
       db:
