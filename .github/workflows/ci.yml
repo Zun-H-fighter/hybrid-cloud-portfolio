@@ -1,5 +1,6 @@
 name: CI
 
-on:
-  pull_request:
-    branches: [ main ]
+jobs:
+  on:
+    pull_request:
+      branches: [ main ]
