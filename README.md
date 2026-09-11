@@ -34,7 +34,7 @@ TODO 어플리케이션을 배포하고, IaC, 모니터링, CI/CD로 운영을 �
 | 클라우드 (AWS) | S3(백업), IAM(권한), CloudWatch(로그·메트릭) |
 | IaC | Terraform(AWS), Ansible(서버 구성) |
 | CI/CD | GitHub Actions |
-| 인프라 | Hetzner Cloud VPS (Ubuntu 24.04, Singapore) |
+| 인프라 | Hetzner Cloud VPS (Ubuntu 24.04, Falkenstein) |
 
 ## 인프라 구성
 
@@ -77,11 +77,16 @@ TODO APP 포트폴리오 구성 완료.
 ## 저장소 구조
 
 ```
-├── docs/         # 아키텍처 다이어그램, 단계별 기록
-├── docker/       # Docker Compose 및 컨테이너 설정
-├── terraform/    # AWS 인프라 코드 (IaC)
-├── ansible/      # 서버 구성 자동화 playbook
-└── .github/      # GitHub Actions 워크플로우
+├── app/                # Node.js(Express) TODO 앱 + Dockerfile
+├── nginx/              # 리버스 프록시 설정
+├── monitoring/         # Prometheus 설정
+├── scripts/            # S3 백업 스크립트
+├── terraform/          # AWS 인프라 코드 (IaC)
+├── ansible/            # 서버 구성 자동화 playbook
+├── docs/               # 아키텍처, 단계별 기록, 트러블슈팅
+├── .github/workflows/  # CI(PR 검증) / CD(빌드 → GHCR → 배포)
+├── docker-compose.yml
+└── .env.example
 ```
 
 ## 개발 회고
