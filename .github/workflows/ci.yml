@@ -1,6 +1,51 @@
 name: CI
 
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
 jobs:
-  on:
-    pull_request:
-      branches: [ main ]
+  validate:
+    runs-on: ubuntu-latest
+    env:
+      DB_PASSWORD: dummy
+      GRAFANA_ADMIN_PASSWORD: dummy
+      APP_TAG: dummy
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 워크플로 YAML 문법 검증
+        run: |
+          python3 - <<'PY'
+          import yaml, glob, sys
+          ok = True
+          for f in sorted(glob.glob('.github/workflows/*.yml')):
+              try:
+                  yaml.safe_load(open(f))
+                  print('OK  ', f)
+              except yaml.YAMLError as e:
+                  print('FAIL', f, e)
+                  ok = False
+          sys.exit(0 if ok else 1)
+          PY
+
+      - name: compose 설정 검증
+        run: docker compose config --quiet
+
+      - name: 배포용 compose에 build 가 없는지 확인
+        run: |
+          if docker compose config | grep -q "build:"; then
+            echo "::error::배포용 compose에 build: 가 있습니다. 서버가 이미지를 직접 빌드하게 됩니다."
+            echo "docker-compose.override.yml 이 커밋되지 않았는지 확인하세요."
+            exit 1
+          fi
+          echo "OK - 서버는 pull 전용입니다"
+
+      - name: app 이미지가 GHCR 을 가리키는지 확인
+        run: |
+          docker compose config | grep -E "image: ghcr\.io/" || {
+            echo "::error::app 서비스가 GHCR 이미지를 참조하지 않습니다."
+            exit 1
+          }
