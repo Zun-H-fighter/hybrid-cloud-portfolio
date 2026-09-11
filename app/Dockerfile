@@ -1,5 +1,5 @@
 # Node 20 슬림 이미지 기반
-FROM node:20-slim
+FROM node:20.20.2-slim
 
 # 컨테이너 안 작업 폴더
 WORKDIR /app
