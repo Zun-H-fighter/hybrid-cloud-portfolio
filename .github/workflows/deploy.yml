@@ -37,23 +37,19 @@ jobs:
             ${{ steps.meta.outputs.image }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-
-  deploy:
+          
+    deploy:
     needs: build-push
     runs-on: ubuntu-latest
     steps:
-      - uses: appleboy/scp-action@v1
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            set -e
-            cd ~/hybrid-cloud-portfoilo
-            git pull --ff-only
-            grep -q '^APP_TAG=' .env || echo 'APP_TAG=latest' >> .env
-            sed -i "s|^APP_TAG=.*|APP_TAG=${{ needs.build-push.outpus.tag }}|" .env
-            docker compose pull
-            docker compose up -d
-            docker compose ps
+      - name: Deploy over SSH
+        env:
+          SSH_KEY:  ${{ secrets.SSH_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          APP_TAG:  ${{ needs.build-push.outputs.tag }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new "$SSH_USER@$SSH_HOST" "cd ~/hybrid-cloud-portfolio && git pull --ff-only && sed -i 's|^APP_TAG=.*|APP_TAG=$APP_TAG|' .env && docker compose pull && docker compose up -d && docker compose ps"
