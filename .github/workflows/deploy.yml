@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-    outpus:
+    outputs:
       image: ${{ steps.meta.outputs.image }}
       tag:   ${{ steps.meta.outputs.tag }}
     steps:
