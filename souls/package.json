@@ -1,0 +1,16 @@
+{
+  "name": "souls-optimizer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Dark Souls 1 armor optimizer",
+  "scripts": {
+    "seed": "node scripts/seed.js",
+    "seed:check": "node scripts/seed.js --check"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "pg": "^8.13.0"
+  }
+}

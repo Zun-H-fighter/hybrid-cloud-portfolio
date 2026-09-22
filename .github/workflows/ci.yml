@@ -31,6 +31,10 @@ jobs:
           sys.exit(0 if ok else 1)
           PY
 
+      - name: 다크소울 참조 데이터 검증
+        working-directory: souls
+        run: node scripts/seed.js --check
+
       - name: compose 설정 검증
         run: docker compose config --quiet
 

@@ -1,0 +1,151 @@
+{
+  "version": "ds1-2026-09-21",
+  "source": {
+    "values": "cosmcbun/Dark-Souls-Armor-Optimizer stats backup CSV (+0, +10)",
+    "status": "UNVERIFIED — Fandom 위키 원문과 대조 필요",
+    "missing": "strike/slash/thrust 는 원본 CSV에 없어 null"
+  },
+  "armor": [
+    {
+      "name_en": "Elite Knight Helm",
+      "name_ko": null,
+      "slot": "head",
+      "set_name": "Elite Knight Set",
+      "weight": 4.5,
+      "poise": 6,
+      "max_upgrade": 10,
+      "defense": {
+        "0": {
+          "physical": 15,
+          "strike": null,
+          "slash": null,
+          "thrust": null,
+          "magic": 7,
+          "fire": 8,
+          "lightning": 6,
+          "bleed": 9,
+          "poison": 6,
+          "curse": 0
+        },
+        "10": {
+          "physical": 36.3,
+          "strike": null,
+          "slash": null,
+          "thrust": null,
+          "magic": 16.9,
+          "fire": 19.4,
+          "lightning": 14.5,
+          "bleed": 12.6,
+          "poison": 8.4,
+          "curse": 0
+        }
+      }
+    },
+    {
+      "name_en": "Elite Knight Armor",
+      "name_ko": null,
+      "slot": "chest",
+      "set_name": "Elite Knight Set",
+      "weight": 11.7,
+      "poise": 15,
+      "max_upgrade": 10,
+      "defense": {
+        "0": {
+          "physical": 39,
+          "strike": null,
+          "slash": null,
+          "thrust": null,
+          "magic": 17,
+          "fire": 18,
+          "lightning": 15,
+          "bleed": 23,
+          "poison": 16,
+          "curse": 0
+        },
+        "10": {
+          "physical": 94.4,
+          "strike": null,
+          "slash": null,
+          "thrust": null,
+          "magic": 41.1,
+          "fire": 43.6,
+          "lightning": 36.3,
+          "bleed": 32.2,
+          "poison": 22.4,
+          "curse": 0
+        }
+      }
+    },
+    {
+      "name_en": "Elite Knight Gauntlets",
+      "name_ko": null,
+      "slot": "hands",
+      "set_name": "Elite Knight Set",
+      "weight": 3.7,
+      "poise": 4,
+      "max_upgrade": 10,
+      "defense": {
+        "0": {
+          "physical": 18,
+          "strike": null,
+          "slash": null,
+          "thrust": null,
+          "magic": 7,
+          "fire": 8,
+          "lightning": 5,
+          "bleed": 7,
+          "poison": 5,
+          "curse": 0
+        },
+        "10": {
+          "physical": 43.6,
+          "strike": null,
+          "slash": null,
+          "thrust": null,
+          "magic": 16.9,
+          "fire": 19.4,
+          "lightning": 12.1,
+          "bleed": 9.8,
+          "poison": 7,
+          "curse": 0
+        }
+      }
+    },
+    {
+      "name_en": "Elite Knight Leggings",
+      "name_ko": null,
+      "slot": "legs",
+      "set_name": "Elite Knight Set",
+      "weight": 6.9,
+      "poise": 9,
+      "max_upgrade": 10,
+      "defense": {
+        "0": {
+          "physical": 23,
+          "strike": null,
+          "slash": null,
+          "thrust": null,
+          "magic": 11,
+          "fire": 11,
+          "lightning": 9,
+          "bleed": 14,
+          "poison": 9,
+          "curse": 0
+        },
+        "10": {
+          "physical": 55.7,
+          "strike": null,
+          "slash": null,
+          "thrust": null,
+          "magic": 26.6,
+          "fire": 26.6,
+          "lightning": 21.8,
+          "bleed": 19.6,
+          "poison": 12.6,
+          "curse": 0
+        }
+      }
+    }
+  ]
+}
+
