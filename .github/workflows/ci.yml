@@ -1,11 +1,12 @@
 name: CI
 
+# main 브랜치 push 때는 Deploy 워크플로가 이 파일을 호출한다 (workflow_call).
+# 여기서 push 트리거를 또 걸면 같은 검증이 두 번 돈다.
 on:
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
-
+  workflow_call:
+    
 jobs:
   validate:
     runs-on: ubuntu-latest

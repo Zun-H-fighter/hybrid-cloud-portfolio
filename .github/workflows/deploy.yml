@@ -3,8 +3,15 @@ name: Deploy
 on:
   push:
     branches: [ main ]
+# 배포가 겹치지 않게 한 번에 하나씩. 진행 중인 배포는 취소하지 않고 끝날 때까지 기다린다.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
 
 jobs:
+  validate:
+    uses: ./.github/workflows/ci.yml
+
   build-push:
     runs-on: ubuntu-latest
     permissions:
