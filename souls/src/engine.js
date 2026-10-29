@@ -62,7 +62,7 @@ function createEngine(armors){
                 const i = j + 1;
                 // 요청 레벨과 max_upgrade 중 작은 값 이하에서 데이터가 있는 가장 높은 레벨 사용
                 const cap = Math.min(level, a.max_upgrade);
-                const lv = Math.max(...Object.keys(a.defense).map(number).filter((l) => l <= cap));
+                const lv = Math.max(...Object.keys(a.defense).map(Number).filter((l) => l <= cap));
                 s.armor[i] = a;
                 s.levelUsed[i] = lv;
                 s.w[i] = toTenths(a.weight);

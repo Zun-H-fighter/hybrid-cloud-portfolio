@@ -99,6 +99,13 @@ TODO APP 포트폴리오 구성 완료. 같은 서버로 올릴 Darksouls 장비
 
 문제 해결 과정과 그 사고방식은 [docs/troubleshooting.md](docs/troubleshooting.md)에 정리했습니다
 
+## 서비스
+
+| 서비스 | 설명 |
+|---|---|
+| TODO 앱 (`app/`) | Express + PostgreSQL CRUD. 인프라 위에서 동작하는 첫 워크로드 |
+| [souls (`souls/`)](souls/README.md) | Dark Souls 1 방어구 최적화 API. 장비 하중·포이즈 제약 하에 최적 조합 계산 |
+
 ## 작성자
 
 [Zun_H_fighter] — [전북대 컴퓨터인공지능학부 / 클라우드·시스템 엔지니어 지망]
