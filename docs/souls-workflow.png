@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="880" viewBox="0 0 1400 880" font-family="'Noto Sans CJK KR','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+    <marker id="arrDash" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/>
+    </marker>
+    <style>
+      .box{fill:#fff;stroke:#334155;stroke-width:1.5}
+      .plan{fill:#fbfcfd;stroke:#94a3b8;stroke-width:1.5;stroke-dasharray:7 5}
+      .t{fill:#0f172a;font-size:17px;font-weight:700}
+      .s{fill:#334155;font-size:13.5px}
+      .tp{fill:#64748b;font-size:17px;font-weight:700}
+      .sp{fill:#64748b;font-size:13.5px}
+      .lane{font-size:14px;font-weight:700;fill:#475569}
+      .line{stroke:#334155;stroke-width:1.6;fill:none}
+      .lineP{stroke:#94a3b8;stroke-width:1.6;fill:none;stroke-dasharray:7 5}
+      .chip{fill:#fff;stroke:#cbd5e1;stroke-width:1}
+      .mono{font-family:'DejaVu Sans Mono',Menlo,Consolas,monospace}
+    </style>
+  </defs>
+
+  <!-- 배경 (GitHub 다크 모드에서도 읽히도록 불투명) -->
+  <rect width="1400" height="880" fill="#ffffff"/>
+
+  <!-- 제목 -->
+  <text x="40" y="52" font-size="26" font-weight="800" fill="#0f172a">장비 최적화 워크플로</text>
+  <text x="40" y="80" font-size="15" fill="#475569">Dark Souls 1 · 방어구 4슬롯에서 하나씩(또는 비움) 골라 장비 하중(+포이즈) 제약 하에 방어 점수 최대화</text>
+
+  <!-- ① 참조 데이터 -->
+  <rect x="30" y="104" width="1340" height="146" rx="14" fill="#eef4ff"/>
+  <text x="50" y="128" class="lane">① 참조 데이터 · 데이터가 바뀔 때마다 1회</text>
+  <rect x="70" y="148" width="280" height="84" rx="10" class="box"/>
+  <text x="90" y="178" class="t mono">armor.json</text>
+  <text x="90" y="202" class="s">git 이 원본 · 사람이 편집</text>
+  <text x="90" y="221" class="s">수정 내역이 diff 로 남음</text>
+
+  <rect x="440" y="148" width="360" height="84" rx="10" class="box"/>
+  <text x="460" y="178" class="t mono">seed.js</text>
+  <text x="460" y="202" class="s">검증: 슬롯 · 필드명 · 강화 시 수치 감소 금지</text>
+  <text x="460" y="221" class="s">upsert · 단일 트랜잭션 · 멱등</text>
+
+  <rect x="890" y="148" width="440" height="84" rx="10" class="box"/>
+  <text x="910" y="178" class="t">PostgreSQL · soulsdb</text>
+  <text x="910" y="202" class="s mono">armor · armor_defense · dataset_meta</text>
+  <text x="910" y="221" class="s">무게·포이즈 / 강화 레벨별 방어 / 데이터 버전</text>
+
+  <path d="M350 190 H432" class="line" marker-end="url(#arr)"/>
+  <path d="M800 190 H882" class="line" marker-end="url(#arr)"/>
+
+  <!-- ② 서버 부팅 -->
+  <rect x="30" y="264" width="1340" height="146" rx="14" fill="#eef8f1"/>
+  <text x="50" y="288" class="lane">② 서버 부팅 · 1회</text>
+  <rect x="890" y="308" width="440" height="84" rx="10" class="box"/>
+  <text x="910" y="338" class="t mono">repo.loadArmor</text>
+  <text x="910" y="362" class="s">DB 에서 한 번만 읽음</text>
+  <text x="910" y="381" class="s">NUMERIC(문자열) → 숫자 변환</text>
+
+  <rect x="70" y="308" width="730" height="84" rx="10" class="box"/>
+  <text x="90" y="338" class="t">엔진 인덱스 (메모리 상주)</text>
+  <text x="90" y="362" class="s">강화 레벨별 · 슬롯별 타입 배열 · 모든 슬롯에 '비움' 선택지 포함</text>
+  <text x="90" y="381" class="s">무게는 0.1 단위 정수 → 예산 경계에서 부동소수 오차로 탈락하지 않음</text>
+
+  <path d="M1110 232 V300" class="line" marker-end="url(#arr)"/>
+  <path d="M890 350 H808" class="line" marker-end="url(#arr)"/>
+
+  <!-- ③ 요청 -->
+  <rect x="30" y="424" width="1340" height="292" rx="14" fill="#fff6e8"/>
+  <text x="50" y="448" class="lane">③ 요청 · 매번 — DB 에 접근하지 않음</text>
+
+  <rect x="70" y="474" width="210" height="96" rx="10" class="box"/>
+  <text x="88" y="504" class="t mono" font-size="15.5">POST /api/optimize</text>
+  <text x="88" y="528" class="s mono" font-size="12.5">budget · level</text>
+  <text x="88" y="547" class="s mono" font-size="12.5">weights · minPoise</text>
+
+  <rect x="320" y="474" width="220" height="96" rx="10" class="box"/>
+  <text x="338" y="504" class="t mono">validate.js</text>
+  <text x="338" y="528" class="s">모르는 필드는 거부</text>
+  <text x="338" y="547" class="s">오류를 모아 400 응답</text>
+
+  <rect x="580" y="474" width="230" height="96" rx="10" class="plan"/>
+  <text x="598" y="504" class="tp">스탯 → 예산 (계획)</text>
+  <text x="598" y="528" class="sp">(40+지구력) × 반지 × 구르기</text>
+  <text x="598" y="547" class="sp">− 무기 무게</text>
+
+  <rect x="850" y="466" width="320" height="232" rx="10" class="box" stroke-width="2"/>
+  <text x="870" y="496" class="t mono">engine.optimize</text>
+  <text x="870" y="526" class="s" font-weight="700" fill="#0f172a">① 손 × 다리 쌍 만들기</text>
+  <text x="890" y="545" class="s">예산을 넘는 쌍은 미리 제외</text>
+  <text x="870" y="573" class="s" font-weight="700" fill="#0f172a">② 요구 포이즈별 파레토 프론티어</text>
+  <text x="890" y="592" class="s">더 무겁고 점수가 낮은 쌍 제거</text>
+  <text x="870" y="620" class="s" font-weight="700" fill="#0f172a">③ 머리 × 몸통 × 이분탐색</text>
+  <text x="890" y="639" class="s">남은 예산으로 프론티어 검색</text>
+  <line x1="870" y1="656" x2="1150" y2="656" stroke="#e2e8f0"/>
+  <text x="870" y="681" class="s" fill="#0f766e" font-weight="700">실측 1.2 ms · 포이즈 조건 2.4 ms (765만 조합)</text>
+
+  <rect x="1200" y="474" width="160" height="96" rx="10" class="box"/>
+  <text x="1218" y="504" class="t">응답</text>
+  <text x="1218" y="528" class="s mono" font-size="12.5">items · totals</text>
+  <text x="1218" y="547" class="s mono" font-size="12.5">took_ms</text>
+
+  <path d="M280 522 H312" class="line" marker-end="url(#arr)"/>
+  <path d="M540 522 H572" class="lineP" marker-end="url(#arrDash)"/>
+  <path d="M810 522 H842" class="lineP" marker-end="url(#arrDash)"/>
+  <path d="M1170 522 H1192" class="line" marker-end="url(#arr)"/>
+  <!-- 현재(검증 → 엔진 직행, 예산을 직접 받음) -->
+  <path d="M430 570 V606 H842" class="line" marker-end="url(#arr)"/>
+  <text x="575" y="598" class="s" font-size="12" fill="#475569">현재: budget 을 직접 받아 엔진으로</text>
+
+  <!-- 엔진 인덱스 → 엔진 -->
+  <path d="M760 392 V438 H1015 V458" class="line" marker-end="url(#arr)"/>
+  <text x="790" y="432" class="s" font-size="12" fill="#475569">메모리 참조</text>
+
+  <!-- 빌드 저장 (계획) -->
+  <rect x="70" y="626" width="740" height="72" rx="10" class="plan"/>
+  <text x="88" y="654" class="tp">빌드 저장 · 공유 링크 (계획) <tspan class="sp mono" font-weight="400">POST /api/builds → /b/:slug</tspan></text>
+  <text x="88" y="680" class="sp">입력의 sha256(params_hash)이 같으면 다시 계산하지 않고 기존 slug 반환 → build 테이블</text>
+  <path d="M850 662 H818" class="lineP" marker-end="url(#arrDash)"/>
+
+  <!-- ④ CI 게이트 -->
+  <rect x="30" y="730" width="1340" height="96" rx="14" fill="#f3f4f6"/>
+  <text x="50" y="754" class="lane">④ 배포 전 CI 게이트 · 하나라도 실패하면 배포 중단</text>
+  <rect x="70" y="770" width="250" height="38" rx="19" class="chip"/>
+  <text x="90" y="795" class="s mono">seed.js --check</text>
+  <rect x="340" y="770" width="560" height="38" rx="19" class="chip"/>
+  <text x="360" y="795" class="s"><tspan class="mono">node --test</tspan> · 손계산 7건 + 무작위 300건 완전탐색 대조</text>
+  <rect x="920" y="770" width="410" height="38" rx="19" class="chip"/>
+  <text x="940" y="795" class="s">compose 검증 · 서버 빌드(<tspan class="mono">build:</tspan>) 금지</text>
+
+  <!-- 범례 -->
+  <line x1="1040" y1="856" x2="1080" y2="856" class="line"/>
+  <text x="1088" y="861" class="s">구현됨</text>
+  <line x1="1160" y1="856" x2="1200" y2="856" class="lineP"/>
+  <text x="1208" y="861" class="s">계획</text>
+</svg>

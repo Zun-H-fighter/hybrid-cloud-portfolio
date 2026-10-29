@@ -36,6 +36,10 @@ jobs:
         working-directory: souls
         run: node scripts/seed.js --check
 
+      - name: 다크소울 최적화 엔진 테스트
+        working-directory: souls
+        run: node --test
+
       - name: compose 설정 검증
         run: docker compose config --quiet
 
